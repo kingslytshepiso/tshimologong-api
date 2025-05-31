@@ -3,11 +3,13 @@ package com.kingslymokgwathi.tshimologong_api.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import com.kingslymokgwathi.tshimologong_api.enums.Rating;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +29,9 @@ public class Survey {
     private LocalDate dateOfBirth;
     private String contactNumber;
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "books", joinColumns = @JoinColumn(name = "library_id"))
+    @CollectionTable(name = "food", joinColumns = @JoinColumn(name = "food_id"))
     private List<String> favoriteFood = new ArrayList<>();
-    @Embedded
-    private Preference preference;
+    @ElementCollection(targetClass = Rating.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "ratings", joinColumns = @JoinColumn(name = "survey_id"))
+    private Map<String, Rating> ratings;
 }
